@@ -24,8 +24,9 @@ db_user.findOne({ _id: data.id}, function (err, docs) {
       else{res.send(err)}
     })
 }else{
-    res.send({"success":false,"status":400,"message":'user not exist',"data":[]});
-  }
+  console.log();
+  res.send({"success":false,"status":400,"message":'user not exist',"data":[]});
+}
 })
 })
 }
@@ -46,7 +47,7 @@ exports.update_product = (req,res)=>{
 
 
 exports.show_product = (req,res)=>{
-    
+   
     Product.
       find({}).
       populate('user').
@@ -59,21 +60,12 @@ exports.show_product = (req,res)=>{
 exports.show_one_product = (req,res)=>{
   var id = req.params.id
   Product.find({_id : id}).populate('user').exec(function (err, doc) {
-      db_review.find({p_id: id},function(err,docss){
-          var l = (docss.length).toString()
-          if(docss!==null && docss!==undefined){
-            var z = []
-            for(i = 0;i<=l-1;i++){
-               keys= docss[i].reviewMsg;
-               z.push(keys)
-            }
-            doc[0].reviews = z  
+          if(doc!==null && doc!==undefined){ 
             res.send(doc[0])
           }else{
             res.send({"success":true,"status":200,"message":'data undefined'})
           }
-      })        
-  });
+    })        
 }
 
 exports.delete_product = (req,res)=>{
