@@ -21,23 +21,23 @@ require('./users')(router)
 
 
 
-const checkAuth = (req,res,next)=>{
-    if(!req.headers.token){
-        res.send('unauthorized user')
-    }
-    else{
-        jwt.verify(req.headers.token, key,(err, decoded)=>{
-            if(!err){
-                next();
-            } 
-            else {
-                res.send('unauthorized access');
-            }
-        })
-    }
-}   
+// const checkAuth = (req,res,next)=>{
+//     if(!req.headers.token){
+//         res.send('unauthorized user')
+//     }
+//     else{
+//         jwt.verify(req.headers.token, key,(err, decoded)=>{
+//             if(!err){
+//                 next();
+//             } 
+//             else {
+//                 res.send('unauthorized access');
+//             }
+//         })
+//      }
+// }   
 
-router.use(checkAuth)
+// router.use(checkAuth)
 
 
 

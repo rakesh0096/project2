@@ -13,7 +13,7 @@ module.exports = function(router) {
     })
     
     
-    router.delete('/user', function (req, res) {
+    router.delete('/user/:id', function (req, res) {
         userController.delete_user(req,res)
     })
 

@@ -18,12 +18,12 @@ exports.users = (req,res)=>{
 
 
 exports.delete_user = (req,res)=>{
-  var u_id;
-  jwt.verify(req.headers.token, key,(err, decoded)=>{
-    if(!err){
-      u_id = decoded.id
-    } 
-  })
+  var u_id = req.params.id
+  // jwt.verify(req.headers.token, key,(err, decoded)=>{
+  //   if(!err){
+  //     u_id = decoded.id
+  //   } 
+  // })
   
   if(u_id){
     var crisp;
@@ -64,7 +64,6 @@ exports.update_user = (req,res)=>{
     }
   });
 }
-   
    
 exports.get_user = (req,res)=>{
   var u_id;

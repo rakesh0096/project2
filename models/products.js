@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var productSchema = db.Schema({
+  prodImage:{type:String,required:true,trim:true},
   prodName:{type:String,required:true,trim:true},
   prodDesc:{type:String,required:true,trim:true},
-  prodImage:{type:String,required:true,trim:true},
   user: {type: Schema.Types.ObjectId, ref: 'User'},
   reviews: {type: Array}
 });

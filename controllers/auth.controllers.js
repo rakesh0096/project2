@@ -8,18 +8,16 @@ const { check, validationResult } = require('express-validator');
 // create new user 
 
 exports.register = (req,res)=>{
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }else{
     var content = req.body
     db.findOne({email: content.email}, function (err, docs) {
       if(docs){
-        if(docs.email == content.email){
-        res.send({"success":false,"status":400,"message":'user already exist',"data":{}})
+        if(docs.email == content.email)
+        {
+          res.send({"success":false,"status":400,"message":'user already exist',"data":{}})
         }
       }
-      else{
+      else
+      {
         var obj = new db({
           firstName: content.firstName,
           lastName: content.lastName,
@@ -27,12 +25,25 @@ exports.register = (req,res)=>{
           password: bcrypt.hashSync(content.password, 10)
         })
         obj.save((err,data)=>{
-          if(!err){res.send({"success":true,"status":200,"message":'user registered',"data":obj})}
-          else{res.send({"success":false,"status":400,"message":err,"data":obj})}
+          if(!err)
+          {
+            res.json(
+              {
+                "success":true,
+                "status":200,
+                "message":'user registered',
+                "data":obj
+              })}
+          else
+          {
+            res.json({
+              "success":false,
+              "status":400,
+              "message":err,"data":obj
+            })}
         })
       }
     })
-  } 
 }
 
 //user login and token generation
@@ -40,7 +51,7 @@ exports.register = (req,res)=>{
 exports.login = (req,res)=>{
   var content = req.body
   db.find({email: content.email}, function (err, docs) {
-    if(!docs){
+    if(docs.length == 0){
       res.send({"success":false,"status":400,"message":'invalid credentials',"data":content})
     }
     else{
@@ -49,13 +60,13 @@ exports.login = (req,res)=>{
       }
 
       else{
-        var token = jwt.sign({
-          id:docs[0]._id,
-          email:docs[0].email,
-          firstName:docs[0].firstName,
-          lastName:docs[0].lastName
-        },config[1].s_key,{expiresIn: 12000});
-        res.send({"success":true,"status":200,"message":"Successfully login","token":token})
+        // var token = jwt.sign({
+        //   id:docs[0]._id,
+        //   email:docs[0].email,
+        //   firstName:docs[0].firstName,
+        //   lastName:docs[0].lastName
+        // },config[1].s_key,{expiresIn: 12000});
+        res.send({"success":true,"status":200,"message":"Successfully login","token":docs})
       }
     }
   })

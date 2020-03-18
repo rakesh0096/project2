@@ -21,8 +21,8 @@ router.get('/products/:id', function (req, res) {
 })
 
 
-// router.get('/all/products', function (req, res) {
-//   productController.show_product(req,res);
-// })
+router.get('/all/products', function (req, res) {
+  productController.show_product(req,res);
+})
   
 }
